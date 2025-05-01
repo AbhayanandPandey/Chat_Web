@@ -42,17 +42,58 @@ export const signup = async (req, res) => {
 
         generateAccessToken(newUser._id, res);
 
-        return res.status(201).json({ message: 'User created successfully', user: newUser });
+        return res.status(201).json({
+            id: newUser._id,
+            name: newUser.name,
+            email: newUser.email,
+            profilePic: newUser.profilePic,
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Server error' });
     }
 };
 
-export const login = (req, res) => {
-    res.send('login');
+export const login = async (req, res) => {
+    const {email , password} = req.body;
+    try {
+        if (!email || !password) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid User' });
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+        generateAccessToken(user._id, res);
+        return res.status(200).json({
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            profilePic : user.profilePic,
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Server error' });
+        
+    }
 }
 export const logout = (req, res) => {
-    res.send('logout');
+    try {
+        res.cookie('token', '', {
+            httpOnly: true,
+            expires: new Date(0),
+            maxAge: 0,
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
+export const updateProfile = async (req, res) => {
+    
 }
 
