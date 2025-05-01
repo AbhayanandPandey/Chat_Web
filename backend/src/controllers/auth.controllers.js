@@ -1,6 +1,7 @@
 import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import { generateAccessToken } from '../lib/jwt.js';
+import cloudinary from '../lib/cloudinary.js';
 
 export const signup = async (req, res) => {
     const { name, email, password } = req.body;
@@ -94,6 +95,27 @@ export const logout = (req, res) => {
     }
 }
 export const updateProfile = async (req, res) => {
-    
+    try {
+        const profilePic = req.body;
+        const userId = req.user.id;
+        if (!profilePic) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+        const response = await cloudinary.uploader.upload(profilePic);
+        const user = await User.findByIdAndUpdate(userId, {
+            profilePic: response.secure_url,
+        }, { new: true });
+        res.status(200).json(response);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Server error' });
+    }
 }
-
+export const checkAuth = async (req, res) => {
+    try {
+        res.status(200).json(req.user);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
