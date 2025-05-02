@@ -8,7 +8,6 @@ import LoginPage from './Pages/LoginPage.jsx'
 import SettingPage from './Pages/SettingsPage.jsx'
 import ProfilePage from './Pages/ProfilePage.jsx'
 import SignUpPage from './Pages/SignUpPage.jsx'
-import { axiosInstance } from './lib/axios.js';
 import { useAuth } from './store/useAuth.js';
 
 const App = () => {
