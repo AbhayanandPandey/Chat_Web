@@ -7,7 +7,7 @@ router.post('/signup', signup);
 router.post('/login', login);
 router.post('/logout', logout);
 router.put('/update-profile', isAuthenticated, updateProfile);
-router.get('chech', isAuthenticated, checkAuth);
+router.get('/chech', isAuthenticated, checkAuth);
 
 
 export default router
