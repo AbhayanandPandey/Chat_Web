@@ -4,11 +4,11 @@ import { generateAccessToken } from '../lib/jwt.js';
 import cloudinary from '../lib/cloudinary.js';
 
 export const signup = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { fullname, email, password } = req.body;
     console.log('signup', req.body);
 
     try {
-        if (!name || !email || !password) {
+        if (!fullname || !email || !password) {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
@@ -34,7 +34,7 @@ export const signup = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            name,
+            fullname,
             email,
             password: passwordHash,
         });
@@ -45,7 +45,7 @@ export const signup = async (req, res) => {
 
         return res.status(201).json({
             id: newUser._id,
-            name: newUser.name,
+            fullname: newUser.fullname,
             email: newUser.email,
             profilePic: newUser.profilePic,
         });
@@ -54,7 +54,6 @@ export const signup = async (req, res) => {
         return res.status(500).json({ message: 'Server error' });
     }
 };
-
 export const login = async (req, res) => {
     const {email , password} = req.body;
     try {
@@ -72,7 +71,7 @@ export const login = async (req, res) => {
         generateAccessToken(user._id, res);
         return res.status(200).json({
             id: user._id,
-            name: user.name,
+            fullname: user.fullname,
             email: user.email,
             profilePic : user.profilePic,
         });
