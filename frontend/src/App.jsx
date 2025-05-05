@@ -1,9 +1,8 @@
 import Navbar from "./components/Navbar";
-import SignUpPage from "./pages1/signuppage";
-// const SignUpPage = require('./pages/Signuppage')
-import HomePage from "./pages1/Homepage";
-import LoginPage from "./pages1/Loginpage";
-import ProfilePage from "./pages1/Profilepage";
+import SignUpPage from "./page/Signuppage";
+import HomePage from "./page/Homepage";
+import LoginPage from "./page/Loginpage";
+import ProfilePage from "./page/Profilepage";
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "./store/useAuthStore";
