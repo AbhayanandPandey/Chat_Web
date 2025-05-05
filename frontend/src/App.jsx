@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
-import SignUpPage from "./pages/Signuppage";
+// import SignUpPage from "./pages/Signuppage";
+const SignUpPage = require('./pages/Signuppage')
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/Loginpage";
 import ProfilePage from "./pages/Profilepage";
