@@ -1,14 +1,14 @@
 import { Server } from "socket.io";
 import http from "http";
-import https from 'https'
 import express from "express";
 
 const app = express();
-const server = https.createServer(app);
+const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
     origin: ["https://chat-web-1-fy85.onrender.com"],
+    httpOnly:false,
   },
 });
 
