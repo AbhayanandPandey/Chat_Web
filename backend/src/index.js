@@ -22,6 +22,7 @@ app.use(
   cors({
     origin: "https://chat-web-1-fy85.onrender.com",
     credentials: true,
+    httpOnly:false,
   })
 );
 
